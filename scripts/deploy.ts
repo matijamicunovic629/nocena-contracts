@@ -28,7 +28,8 @@ async function deployContracts() {
   // Deploy Token contract
   const tokenArtifact = await deployer.loadArtifact("NocenaToken");
   console.log("🚀 Deploying NocenaToken...");
-  const tokenInstance = await deployer.deploy(tokenArtifact);
+  const totalSupply = ethers.parseUnits("1000000000", 18).toString(); // 1 billion tokens
+  const tokenInstance = await deployer.deploy(tokenArtifact, [totalSupply]);
   const tokenAddress = await tokenInstance.getAddress();
   console.log(`✅ NocenaToken deployed at: ${tokenAddress}`);
 

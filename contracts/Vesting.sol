@@ -17,7 +17,7 @@ contract Vesting is Ownable {
     IERC20 public token;
     mapping(address => Schedule) public schedules;
 
-    constructor(IERC20 _token) {
+    constructor(IERC20 _token) Ownable(msg.sender) {
         token = _token;
     }
 
