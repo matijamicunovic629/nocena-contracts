@@ -65,4 +65,59 @@ contract Vesting is Ownable {
         s.claimed += claimable;
         token.transfer(msg.sender, claimable);
     }
+
+    function getClaimable(address beneficiary) public view returns (uint256) {
+        Schedule storage s = schedules[beneficiary];
+        if (s.totalAllocation == 0) return 0;
+
+        uint256 elapsed = block.timestamp > s.cliff ? block.timestamp - s.cliff : 0;
+        uint256 vested = s.tgeRelease;
+
+        if (elapsed > 0) {
+            uint256 linear = s.totalAllocation - s.tgeRelease;
+            uint256 unlocked = linear * elapsed / s.duration;
+            vested += unlocked;
+        }
+
+        return vested > s.claimed ? vested - s.claimed : 0;
+    }
+
+    function getSchedule(address beneficiary) external view returns (
+        uint256 totalAllocation,
+        uint256 tgeRelease,
+        uint256 start,
+        uint256 cliff,
+        uint256 duration,
+        uint256 claimed
+    ) {
+        Schedule storage s = schedules[beneficiary];
+        return (
+            s.totalAllocation,
+            s.tgeRelease,
+            s.start,
+            s.cliff,
+            s.duration,
+            s.claimed
+        );
+    }
+
+    function getVestedAmount(address beneficiary) public view returns (uint256) {
+        Schedule storage s = schedules[beneficiary];
+        if (s.totalAllocation == 0) return 0;
+
+        uint256 elapsed = block.timestamp > s.cliff ? block.timestamp - s.cliff : 0;
+        uint256 vested = s.tgeRelease;
+
+        if (elapsed > 0) {
+            uint256 linear = s.totalAllocation - s.tgeRelease;
+            uint256 unlocked = linear * elapsed / s.duration;
+            vested += unlocked;
+        }
+
+        return vested > s.totalAllocation ? s.totalAllocation : vested;
+    }
+
+    function getClaimed(address beneficiary) external view returns (uint256) {
+        return schedules[beneficiary].claimed;
+    }
 }
