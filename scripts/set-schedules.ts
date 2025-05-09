@@ -54,7 +54,6 @@ async function main() {
       wallet
   );
 
-
   const allocations = [
     {
       name: "Seed",
