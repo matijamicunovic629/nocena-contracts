@@ -1,6 +1,6 @@
 # Smart Contracts Guide 📜
 
-This repository contains the core functionality for **Nocena Token** and **Vesting**. 
+This repository contains the core functionality for **Nocena Token**, **Vesting**, **MoodNftMarkertplace**. 
 
 The smart contracts handle vesting schedules for token allocations, token distribution, and deployment on lens testnet.
 
@@ -23,6 +23,7 @@ The smart contracts handle vesting schedules for token allocations, token distri
 ## Key Contracts 📋
 - `NocenaToken.sol`: Main token for development [(View deployed contract on Lens Testnet)](https://explorer.testnet.lens.xyz/address/0xff37F413099547A2B237EE04a12cacec6583b4dB) 
 - `vesting.sol`: Manages token vesting schedules and distribution [(View deployed contract on Lens Testnet)](https://explorer.testnet.lens.xyz/address/0x63C95E6B23E20De964378bd2B41F96480758b338)
+- `MoodNftMarketplace.sol`: Manages Mood Nft Marketplace [(View deployed contract on Lens Testnet)](https://explorer.testnet.lens.xyz/address/0xeC9E2b387a6a3D093114e68C0bAA7b7f5961024a)
 
 ## Features ✨
 
@@ -31,6 +32,7 @@ The smart contracts handle vesting schedules for token allocations, token distri
 - Time-based vesting with cliffs for lock periods.
 - Token Generation Event (TGE) percent release.
 - Easy deployment and scheduling through Hardhat scripts.
+- Unique Nft Marketplace by Moods 
 
 ## Deployment 🌐
 

@@ -40,6 +40,13 @@ async function deployContracts() {
   const vestingAddress = await vestingInstance.getAddress();
   console.log(`✅ Vesting deployed at: ${vestingAddress}`);
 
+  // Deploy MoodNftMarketplace contract
+  const MoodNftMarketplaceArtifact = await deployer.loadArtifact("MoodNftMarketplace");
+  console.log("🚀 Deploying MoodNftMarketplace...");
+  const MoodNftMarketplaceInstance = await deployer.deploy(MoodNftMarketplaceArtifact, ['0xff37F413099547A2B237EE04a12cacec6583b4dB']);
+  const MoodNftMarketplaceAddress = await MoodNftMarketplaceInstance.getAddress();
+  console.log(`✅ MoodNftMarketplace deployed at: ${MoodNftMarketplaceAddress}`);
+
   // Save addresses
   const networkName = hre.network.name;
   const chainId = (hre.network.config as any).chainId;
@@ -50,7 +57,8 @@ async function deployContracts() {
     chainId,
     contracts: {
       NocenaToken: tokenAddress,
-      Vesting: vestingAddress
+      Vesting: vestingAddress,
+      MoodNftMarketplace: MoodNftMarketplaceAddress,
     },
     deployedAt: new Date().toISOString()
   };
