@@ -33,6 +33,9 @@ contract MoodNftMarketplace is ERC721, Ownable {
     // tokenId => MoodNFT metadata
     mapping(uint256 => MoodNFT) public moodNFTs;
 
+    // Hash(postId) => true if minted
+    mapping(bytes32 => bool) private _mintedPosts;
+
     // pseudo accountAddress => array of tokenIds
     mapping(string => uint256[]) private accountAddressToTokenIds;
 
@@ -66,6 +69,10 @@ contract MoodNftMarketplace is ERC721, Ownable {
         uint256 price
     ) external {
         require(price > 0, "Price must be greater than zero");
+
+        bytes32 postHash = keccak256(abi.encodePacked(postId));
+        require(!_mintedPosts[postHash], "Post already minted");
+        _mintedPosts[postHash] = true;
 
         uint256 newTokenId = _nextTokenId++;
 
